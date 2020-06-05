@@ -1,0 +1,6 @@
+elasticsearch:
+  endpoint: ""
+
+aws:
+  region: "eu-west-1"
+  roleARN: ""
