@@ -11,11 +11,10 @@ type Elasticsearch struct {
 
 type AWS struct {
 	Region  string
-	Service string
 	RoleARN string
 }
 
 type User struct {
-	Password     string
+	Password     string   `yaml:"password" json:"password"`
 	BackendRoles []string `yaml:"backend_roles" json:"backend_roles"`
 }

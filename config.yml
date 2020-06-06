@@ -1,6 +1,6 @@
 elasticsearch:
-  endpoint: ""
+  endpoint: "https://elasticsearch"
 
 aws:
   region: "eu-west-1"
-  roleARN: ""
+  roleARN: "arn:aws:iam::123456123456:role/IAMMasterUser"
