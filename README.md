@@ -15,3 +15,7 @@ Fear no more! I've built something!
 | `elasticsearch.endpoint`  | Configurable [AWS Elasticsearch Service](https://aws.amazon.com/de/elasticsearch-service) | `https://elasticsearch`                           |
 | `aws.region`              | AWS Region where your Domain was placed                                                   | `eu-west-1`                                       |
 | `aws.roleARN`             | IAM Master User ARN that you defined within Fine-Grained-Access-Control settings          | `arn:aws:iam::123456123456:role/IAMMasterUser`    |
+
+## Contributing
+
+Pull requests are welcome.
