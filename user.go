@@ -9,6 +9,11 @@ import (
 	"io/ioutil"
 )
 
+type User struct {
+	Password     string   `yaml:"password" json:"password"`
+	BackendRoles []string `yaml:"backend_roles" json:"backend_roles"`
+}
+
 const filename = "./files/users.yml"
 
 func createUser() error {

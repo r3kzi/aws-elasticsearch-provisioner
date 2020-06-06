@@ -1,4 +1,4 @@
-package main
+package cfg
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -24,7 +24,7 @@ func TestParseConfig(t *testing.T) {
 		t.Errorf("Failed to write file, %v", err)
 	}
 
-	config, err := parseConfig(filename)
+	config, err := ParseConfig(filename)
 	assert.Nil(t, err)
 	assert.NotNil(t, config)
 	assert.Equal(t, config.Elasticsearch.Endpoint, "https://elasticsearch:443")

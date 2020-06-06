@@ -1,4 +1,4 @@
-package main
+package cfg
 
 import (
 	"errors"
@@ -6,7 +6,21 @@ import (
 	"github.com/spf13/viper"
 )
 
-func parseConfig(filename string) (*Config, error) {
+type Config struct {
+	Elasticsearch Elasticsearch
+	AWS           AWS
+}
+
+type Elasticsearch struct {
+	Endpoint string
+}
+
+type AWS struct {
+	Region  string
+	RoleARN string
+}
+
+func ParseConfig(filename string) (*Config, error) {
 	viper.SetConfigName(filename)
 	viper.AddConfigPath(".")
 	viper.SetConfigType("yml")
