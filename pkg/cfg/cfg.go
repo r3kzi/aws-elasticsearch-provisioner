@@ -3,34 +3,32 @@ package cfg
 import (
 	"errors"
 	"fmt"
-	"github.com/spf13/viper"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
 )
 
 type Config struct {
-	Elasticsearch Elasticsearch
-	AWS           AWS
+	Elasticsearch Elasticsearch `yaml:"elasticsearch"`
+	AWS           AWS           `yaml:"aws"`
 }
 
 type Elasticsearch struct {
-	Endpoint string
+	Endpoint string `yaml:"endpoint"`
 }
 
 type AWS struct {
-	Region  string
-	RoleARN string
+	Region  string `yaml:"region"`
+	RoleARN string `yaml:"roleARN"`
 }
 
 func ParseConfig(filename string) (*Config, error) {
-	viper.SetConfigName(filename)
-	viper.AddConfigPath(".")
-	viper.SetConfigType("yml")
-	viper.AutomaticEnv()
-	if err := viper.ReadInConfig(); err != nil {
+	file, err := ioutil.ReadFile(filename)
+	if err != nil {
 		return nil, errors.New(fmt.Sprintf("Error reading config file, %s", err))
 	}
 	var config *Config
-	if err := viper.Unmarshal(&config); err != nil {
-		return nil, errors.New(fmt.Sprintf("Unable to decode into struct, %v", err))
+	if err := yaml.Unmarshal(file, &config); err != nil {
+		return nil, errors.New(fmt.Sprintf("Error unmarshalling config file, %s", err))
 	}
 	return config, nil
 }
