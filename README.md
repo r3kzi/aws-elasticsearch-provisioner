@@ -29,7 +29,7 @@ AWS Elasticsearch Service Provisioner requires a
 $ go get -u github.com/r3kzi/elasticsearch-provisioner
 ```
 
-To find out where `golint` was installed you can run `$ go list -f {{.Target}} github.com/r3kzi/elasticsearch-provisioner`. 
+To find out where `elasticsearch-provisioner` was installed you can run `$ go list -f {{.Target}} github.com/r3kzi/elasticsearch-provisioner`. 
 
 For `elasticsearch-provisioner` to be used globally add that directory to the `$PATH` environment setting.
 
