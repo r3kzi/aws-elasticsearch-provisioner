@@ -1,4 +1,4 @@
-[![Logo](https://storage.googleapis.com/gopherizeme.appspot.com/gophers/8b1d3e63f2013bf48b04c906312dc358f6f916e3.png)](https://storage.googleapis.com/gopherizeme.appspot.com/gophers/8b1d3e63f2013bf48b04c906312dc358f6f916e3.png) 
+<p align="center"><img src="https://storage.googleapis.com/gopherizeme.appspot.com/gophers/8b1d3e63f2013bf48b04c906312dc358f6f916e3.png" alt="Logo"></p>
 
 # AWS Elasticsearch Service Provisioner
 
