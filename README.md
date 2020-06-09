@@ -20,6 +20,19 @@ Fear no more! I've built something!
 | `aws.region`              | AWS Region where your Domain was placed                                                   | `eu-west-1`                                       |
 | `aws.roleARN`             | IAM Master User ARN that you defined within Fine-Grained-Access-Control settings          | `arn:aws:iam::123456123456:role/IAMMasterUser`    |
 
+## Installation
+
+AWS Elasticsearch Service Provisioner requires a
+[supported release of Go](https://golang.org/doc/devel/release.html#policy).
+
+```shell script
+$ go get -u github.com/r3kzi/elasticsearch-provisioner
+```
+
+To find out where `golint` was installed you can run `$ go list -f {{.Target}} github.com/r3kzi/elasticsearch-provisioner`. 
+
+For `elasticsearch-provisioner` to be used globally add that directory to the `$PATH` environment setting.
+
 ## Contributing
 
 Pull requests are welcome.
