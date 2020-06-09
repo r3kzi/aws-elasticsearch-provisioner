@@ -12,11 +12,13 @@ import (
 
 const userAPIEndpoint = "_opendistro/_security/api/internalusers"
 
+// User correspond a Kibana User
 type User struct {
 	Password     string   `yaml:"password" json:"password"`
 	BackendRoles []string `yaml:"backend_roles" json:"backend_roles"`
 }
 
+// Read will a file und tries to parse User structs
 func Read(filename string) (map[string]User, error) {
 	file, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -30,6 +32,7 @@ func Read(filename string) (map[string]User, error) {
 	return users, nil
 }
 
+// Create will create all User using the http package
 func Create(users map[string]User, config *cfg.Config, creds *credentials.Credentials) error {
 	for key, value := range users {
 		jsonUser, err := json.Marshal(value)
@@ -50,15 +53,22 @@ func Create(users map[string]User, config *cfg.Config, creds *credentials.Creden
 			return fmt.Errorf(fmt.Sprintf("For user: %s, %s", key, err))
 		}
 
-		response, err := http.DoRequest(signRequest)
+		resp, err := http.DoRequest(signRequest)
 		if err != nil {
 			return fmt.Errorf(fmt.Sprintf("For user: %s, %s", key, err))
 		}
-		fmt.Println(response.StatusCode)
+
+		if resp.StatusCode != 200 && resp.StatusCode != 201 {
+			bodyBytes, _ := ioutil.ReadAll(resp.Body)
+			bodyString := string(bodyBytes)
+			return fmt.Errorf(fmt.Sprintf("Failed creating user: %s, Status Code was %d\n"+
+				"Message: %s", key, resp.StatusCode, bodyString))
+		}
 	}
 	return nil
 }
 
+// Must ensures validate user map
 func Must(users map[string]User, err error) map[string]User {
 	if err != nil {
 		panic(err)

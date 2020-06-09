@@ -6,20 +6,24 @@ import (
 	"io/ioutil"
 )
 
+// Config is the root config for AWS Elasticsearch Service Provisioner
 type Config struct {
 	Elasticsearch Elasticsearch `yaml:"elasticsearch"`
 	AWS           AWS           `yaml:"aws"`
 }
 
+// Elasticsearch contains all necessary configuration for an Elasticsearch Domain
 type Elasticsearch struct {
 	Endpoint string `yaml:"endpoint"`
 }
 
+// AWS contains all AWS-specific configuration
 type AWS struct {
 	Region  string `yaml:"region"`
 	RoleARN string `yaml:"roleARN"`
 }
 
+// ParseConfig will parse a configuration file
 func ParseConfig(filename string) (*Config, error) {
 	file, err := ioutil.ReadFile(filename)
 	if err != nil {
