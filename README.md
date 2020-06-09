@@ -1,4 +1,4 @@
-<p align="center"><img src="https://storage.googleapis.com/gopherizeme.appspot.com/gophers/8b1d3e63f2013bf48b04c906312dc358f6f916e3.png" alt="Logo"></p>
+<p align="center"><img src="https://storage.googleapis.com/gopherizeme.appspot.com/gophers/8b1d3e63f2013bf48b04c906312dc358f6f916e3.png" alt="Logo" height="200"></p>
 
 # AWS Elasticsearch Service Provisioner
 
