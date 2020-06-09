@@ -2,7 +2,6 @@ package user
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/r3kzi/elasticsearch-provisioner/pkg/cfg"
@@ -21,12 +20,12 @@ type User struct {
 func Read(filename string) (map[string]User, error) {
 	file, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Error reading users file, %s", err))
+		return nil, fmt.Errorf(fmt.Sprintf("Error reading users file, %s", err))
 	}
 
 	var users map[string]User
 	if err := yaml.Unmarshal(file, &users); err != nil {
-		return nil, errors.New(fmt.Sprintf("Error unmarshalling users file, %s", err))
+		return nil, fmt.Errorf(fmt.Sprintf("Error unmarshalling users file, %s", err))
 	}
 	return users, nil
 }
@@ -35,7 +34,7 @@ func Create(users map[string]User, config *cfg.Config, creds *credentials.Creden
 	for key, value := range users {
 		jsonUser, err := json.Marshal(value)
 		if err != nil {
-			return errors.New(fmt.Sprintf("For user: %s, %s", key, err))
+			return fmt.Errorf(fmt.Sprintf("For user: %s, %s", key, err))
 		}
 
 		url := fmt.Sprintf("%s/%s/%s", config.Elasticsearch.Endpoint, userAPIEndpoint, key)
@@ -43,17 +42,17 @@ func Create(users map[string]User, config *cfg.Config, creds *credentials.Creden
 
 		request, err := http.NewRequest(url, string(jsonUser))
 		if err != nil {
-			return errors.New(fmt.Sprintf("For user: %s, %s", key, err))
+			return fmt.Errorf(fmt.Sprintf("For user: %s, %s", key, err))
 		}
 
 		signRequest, err := http.SignRequest(request, body, creds, "es", config.AWS.Region)
 		if err != nil {
-			return errors.New(fmt.Sprintf("For user: %s, %s", key, err))
+			return fmt.Errorf(fmt.Sprintf("For user: %s, %s", key, err))
 		}
 
 		response, err := http.DoRequest(signRequest)
 		if err != nil {
-			return errors.New(fmt.Sprintf("For user: %s, %s", key, err))
+			return fmt.Errorf(fmt.Sprintf("For user: %s, %s", key, err))
 		}
 		fmt.Println(response.StatusCode)
 	}
