@@ -10,10 +10,16 @@ import (
 )
 
 func main() {
-	config, _ := cfg.ParseConfig("config.yml")
+	config, err := cfg.ParseConfig("config.yml")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	// NewCredentials returns a pointer to a new Credentials object wrapping the AssumeRoleProvider
 	creds := stscreds.NewCredentials(session.Must(session.NewSession()), config.AWS.RoleARN)
 
-	//Creating user
+	// Creating user
 	users := user.Must(user.Read("./files/users.yml"))
 	if err := user.Create(users, config, creds); err != nil {
 		fmt.Println(err)
