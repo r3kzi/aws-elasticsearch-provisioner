@@ -3,6 +3,8 @@
 # AWS Elasticsearch Service Provisioner
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/r3kzi/aws-elasticsearch-provisioner)](https://goreportcard.com/report/github.com/r3kzi/aws-elasticsearch-provisioner)
+![Build status](https://travis-ci.com/r3kzi/aws-elasticsearch-provisioner.svg?branch=master)
+
 
 You want to provision your AWS Elasticsearch Service Cluster and you're using an IAM Master User with 
 [Fine-Grained Access Control](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/fgac.html)?
