@@ -5,7 +5,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/r3kzi/aws-elasticsearch-provisioner)](https://goreportcard.com/report/github.com/r3kzi/aws-elasticsearch-provisioner)
 [![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-blue.svg)](https://github.com/r3kzi/aws-elasticsearch-provisioner/blob/master/LICENSE)
 ![Build status](https://travis-ci.com/r3kzi/aws-elasticsearch-provisioner.svg?branch=master)
-[![Go Coverage](https://img.shields.io/badge/Go%20Coverage-67%25-brightgreen.svg?longCache=true&style=flat)](https://img.shields.io/badge/Go%20Coverage-67%25-brightgreen.svg?longCache=true&style=flat)
+[![Go Coverage](https://img.shields.io/badge/Go%20Coverage-78%25-brightgreen.svg?longCache=true&style=flat)](https://img.shields.io/badge/Go%20Coverage-78%25-brightgreen.svg?longCache=true&style=flat)
+
 
 You want to provision your AWS Elasticsearch Service Cluster and you're using an IAM Master User with 
 [Fine-Grained Access Control](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/fgac.html)?

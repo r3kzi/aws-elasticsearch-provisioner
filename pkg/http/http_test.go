@@ -4,7 +4,10 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -45,4 +48,13 @@ func TestSignRequest(t *testing.T) {
 	assert.NotNil(t, signRequest)
 	assert.NotEmpty(t, signRequest.Header.Get("Authorization"))
 	assert.Regexp(t, regexp.MustCompile("^AWS4-HMAC-SHA256"), signRequest.Header.Get("Authorization"))
+}
+
+func TestDoRequest(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	}))
+	req, _ := http.NewRequest(http.MethodPut, server.URL, strings.NewReader(""))
+	err := DoRequest(req)
+	assert.Nil(t, err)
 }
