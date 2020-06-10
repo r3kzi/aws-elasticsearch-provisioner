@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -11,10 +10,7 @@ import (
 )
 
 func main() {
-	configPath := flag.String("config-path", "config.yml", "Path of the configuration file - has to be yml format")
-	flag.Parse()
-
-	config, err := cfg.ParseConfig(*configPath)
+	config, err := cfg.ParseConfig("config.yml")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -24,11 +20,9 @@ func main() {
 	creds := stscreds.NewCredentials(session.Must(session.NewSession()), config.AWS.RoleARN)
 
 	// Creating user
-	if err := user.Create(config, creds); err != nil {
+	users := user.Must(user.Read("./files/users.yml"))
+	if err := user.Create(users, config, creds); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	// Creating roles
-	// Creating rolesmapping
 }
