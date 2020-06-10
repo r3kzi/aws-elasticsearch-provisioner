@@ -3,6 +3,7 @@
 # AWS Elasticsearch Service Provisioner
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/r3kzi/aws-elasticsearch-provisioner)](https://goreportcard.com/report/github.com/r3kzi/aws-elasticsearch-provisioner)
+[![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-blue.svg)](https://github.com/r3kzi/aws-elasticsearch-provisioner/blob/master/LICENSE)
 
 You want to provision your AWS Elasticsearch Service Cluster and you're using an IAM Master User with 
 [Fine-Grained Access Control](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/fgac.html)?
@@ -35,4 +36,9 @@ For `elasticsearch-provisioner` to be used globally add that directory to the `$
 
 ## Contributing
 
-Pull requests are welcome.
+Pull requests are welcome. In order to make sure that your change can be easily merged, please follow these steps:
+
+* Develop your changes in a feature branch named `feature/...`
+* Base your feature branch on `master`
+* Open your pull request against `master`
+* Don't forget to implement tests

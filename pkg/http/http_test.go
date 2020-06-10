@@ -4,6 +4,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
+	"regexp"
 	"testing"
 )
 
@@ -43,4 +44,5 @@ func TestSignRequest(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotNil(t, signRequest)
 	assert.NotEmpty(t, signRequest.Header.Get("Authorization"))
+	assert.Regexp(t, regexp.MustCompile("^AWS4-HMAC-SHA256"), signRequest.Header.Get("Authorization"))
 }
