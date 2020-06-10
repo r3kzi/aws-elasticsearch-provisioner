@@ -3,6 +3,7 @@
 # AWS Elasticsearch Service Provisioner
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/r3kzi/aws-elasticsearch-provisioner)](https://goreportcard.com/report/github.com/r3kzi/aws-elasticsearch-provisioner)
+[![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-blue.svg)](https://github.com/r3kzi/aws-elasticsearch-provisioner/blob/master/LICENSE)
 ![Build status](https://travis-ci.com/r3kzi/aws-elasticsearch-provisioner.svg?branch=master)
 
 
