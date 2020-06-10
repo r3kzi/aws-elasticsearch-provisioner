@@ -4,3 +4,10 @@ elasticsearch:
 aws:
   region: "eu-west-1"
   roleARN: "arn:aws:iam::123456123456:role/IAMMasterUser"
+
+users:
+  - max:
+      password: ""
+      backend_roles:
+        - backend-role-1
+        - backend-role-2
