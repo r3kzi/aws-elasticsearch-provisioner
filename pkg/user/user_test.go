@@ -30,38 +30,47 @@ func (c *CredentialsTestProvider) IsExpired() bool {
 	return false
 }
 
-func TestCreateStatusOK(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, http.MethodPut, r.Method)
-		assert.Regexp(t, regexp.MustCompile("/_opendistro/_security/api/internalusers/*"), r.URL.Path)
-		assert.Regexp(t, regexp.MustCompile("^AWS4-HMAC-SHA256"), r.Header["Authorization"][0])
+func TestCreate(t *testing.T) {
+	tests := []struct {
+		StatusCode int
+		Handler    http.HandlerFunc
+	}{
+		{StatusCode: http.StatusOK, Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			assertRequest(t, r)
+			w.WriteHeader(http.StatusOK)
+		})},
+		{StatusCode: http.StatusCreated, Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			assertRequest(t, r)
+			w.WriteHeader(http.StatusCreated)
+		})},
+		{StatusCode: http.StatusBadRequest, Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			assertRequest(t, r)
+			w.WriteHeader(http.StatusBadRequest)
+		})},
+	}
 
-		w.WriteHeader(http.StatusOK)
-		w.Header().Set("Content-Type", "application/json")
-	}))
-	defer server.Close()
+	for _, test := range tests {
+		server := httptest.NewServer(test.Handler)
 
-	config.Elasticsearch.Endpoint = server.URL
+		config.Elasticsearch.Endpoint = server.URL
 
-	creds := credentials.NewCredentials(&CredentialsTestProvider{})
-	err := Create(&config, creds)
-	assert.Nil(t, err)
+		creds := credentials.NewCredentials(&CredentialsTestProvider{})
+
+		err := Create(&config, creds)
+		switch test.StatusCode {
+		case http.StatusOK:
+			assert.Nil(t, err)
+		case http.StatusCreated:
+			assert.Nil(t, err)
+		case http.StatusBadRequest:
+			assert.NotNil(t, err)
+		}
+		server.Close()
+	}
 }
 
-func TestCreateStatusBadRequest(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, http.MethodPut, r.Method)
-		assert.Regexp(t, regexp.MustCompile("/_opendistro/_security/api/internalusers/*"), r.URL.Path)
-		assert.Regexp(t, regexp.MustCompile("^AWS4-HMAC-SHA256"), r.Header["Authorization"][0])
-
-		w.WriteHeader(http.StatusBadRequest)
-		w.Header().Set("Content-Type", "application/json")
-	}))
-	defer server.Close()
-
-	config.Elasticsearch.Endpoint = server.URL
-
-	creds := credentials.NewCredentials(&CredentialsTestProvider{})
-	err := Create(&config, creds)
-	assert.NotNil(t, err)
+func assertRequest(t *testing.T, r *http.Request) {
+	assert.Equal(t, http.MethodPut, r.Method)
+	assert.Regexp(t, regexp.MustCompile("/_opendistro/_security/api/internalusers/*"), r.URL.Path)
+	assert.Regexp(t, regexp.MustCompile("^AWS4-HMAC-SHA256"), r.Header["Authorization"][0])
 }
