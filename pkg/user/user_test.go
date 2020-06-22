@@ -3,6 +3,7 @@ package user
 import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/r3kzi/elasticsearch-provisioner/pkg/cfg"
+	"github.com/r3kzi/elasticsearch-provisioner/pkg/util/globals"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -10,7 +11,7 @@ import (
 	"testing"
 )
 
-var config = cfg.Config{
+var configuration = &cfg.Config{
 	Elasticsearch: cfg.Elasticsearch{},
 	AWS:           cfg.AWS{},
 	Users: []map[string]cfg.User{
@@ -19,6 +20,11 @@ var config = cfg.Config{
 			"erica": cfg.User{Password: "password", BackendRoles: []string{"backend-role-2", "backend-role-3"}},
 		},
 	},
+}
+
+func init() {
+	globals.SetConfig(configuration)
+	globals.SetCredentials(credentials.NewCredentials(&CredentialsTestProvider{}))
 }
 
 type CredentialsTestProvider struct{}
@@ -52,11 +58,9 @@ func TestCreate(t *testing.T) {
 	for _, test := range tests {
 		server := httptest.NewServer(test.Handler)
 
-		config.Elasticsearch.Endpoint = server.URL
+		configuration.Elasticsearch.Endpoint = server.URL
 
-		creds := credentials.NewCredentials(&CredentialsTestProvider{})
-
-		err := Create(&config, creds)
+		err := Create()
 		switch test.StatusCode {
 		case http.StatusOK:
 			assert.Nil(t, err)
