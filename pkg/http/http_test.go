@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	url     = "https://elasticsearch.com"
+	url     = "https://elasticsearch"
 	body    = "body"
 	service = "es"
 )
